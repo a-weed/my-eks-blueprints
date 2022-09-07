@@ -18,6 +18,33 @@ export default class PipelineConstruct extends Construct {
     .addOns(new blueprints.ClusterAutoScalerAddOn)
     .teams(new TeamPlatform(account), new TeamApplication('burnham',account));
   
+    const repoUrl = 'https://github.com/aws-samples/eks-blueprints-workloads.git';
+
+    const bootstrapRepo : blueprints.ApplicationRepository = {
+        repoUrl,
+        targetRevision: 'workshop',
+    }
+  
+    const devBootstrapArgo = new blueprints.ArgoCDAddOn({
+        bootstrapRepo: {
+            ...bootstrapRepo,
+            path: 'envs/dev'
+        },
+    });
+    const testBootstrapArgo = new blueprints.ArgoCDAddOn({
+        bootstrapRepo: {
+            ...bootstrapRepo,
+            path: 'envs/test'
+        },
+    });
+    const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
+        bootstrapRepo: {
+            ...bootstrapRepo,
+            path: 'envs/prod'
+        },
+    });
+  
+  
     blueprints.CodePipelineStack.builder()
       .name("eks-blueprints-workshop-pipeline")
       .owner("a-weed")
