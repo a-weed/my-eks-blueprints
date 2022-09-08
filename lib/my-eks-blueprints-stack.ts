@@ -1,4 +1,5 @@
 // lib/my-eks-blueprints-stack.ts
+// comment
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
